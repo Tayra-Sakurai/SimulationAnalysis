@@ -119,6 +119,12 @@ class LAMMPS_Data:
     Parameters
     ----------
     frames : Iterable[LAMMPS_Frame]
+        The frames.
+
+    Attributes
+    ----------
+    number_atoms : int
+        The number of atoms.
 
     Methods
     -------
@@ -132,6 +138,7 @@ class LAMMPS_Data:
             frames: Iterable[LAMMPS_Frame]
     ) -> None:
         self.frames: tuple[LAMMPS_Frame, ...] = tuple(frames)
+        self.number_atoms: int = self.frames[0].number_atoms
 
     def get_re(self, num: int = 0) -> npt.NDArray[np.floating[Any]]:
         """Returns the `Re` values of frames.
@@ -187,6 +194,9 @@ class LAMMPS_Data:
     def __str__(self) -> str:
         return '<LAMMPS_Data: Frames=' + str(len(self.frames)) + '>'
 
+    def __len__(self) -> int:
+        return len(self.frames)
+
 
 class Action (Enum):
     """The enumerate of actions.
@@ -211,7 +221,7 @@ class Action (Enum):
     ATOMS = auto()
 
 
-def load_vectors(file: TextIO) -> npt.NDArray[np.floating[Any]]:
+def load_data(file: TextIO) -> LAMMPS_Data:
     """Loads the lammpstrj file to get the vectors.
 
     Parameters
@@ -221,8 +231,8 @@ def load_vectors(file: TextIO) -> npt.NDArray[np.floating[Any]]:
 
     Returns
     -------
-    values : NDArray[floating[Any]]
-        The end distances.
+    values : LAMMPS_Data
+        The data.
     """
     file.seek(0)
     lines: list[str] = file.readlines()
@@ -277,4 +287,4 @@ def load_vectors(file: TextIO) -> npt.NDArray[np.floating[Any]]:
     d_atoms = LAMMPS_Data(flist)
     print()
     print()
-    return d_atoms.get_displacements()
+    return d_atoms
