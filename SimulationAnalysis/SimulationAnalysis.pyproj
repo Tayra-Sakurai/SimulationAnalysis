@@ -4,13 +4,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>bf2d6a3e-f53e-43e7-a4bc-69f8986b654c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>SimulationAnalysis.py</StartupFile>
+    <StartupFile>Analyze.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>SimulationAnalysis</Name>
     <RootNamespace>SimulationAnalysis</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Analyze.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="SimulationAnalysis.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
