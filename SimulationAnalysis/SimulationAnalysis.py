@@ -4,8 +4,6 @@ The classes can be used for other purposes.
 """
 
 import numpy as np
-from tkinter import filedialog, messagebox
-import os
 from typing import Any, TextIO
 import numpy.typing as npt
 from collections.abc import Iterable
@@ -280,32 +278,3 @@ def load_vectors(file: TextIO) -> npt.NDArray[np.floating[Any]]:
     print()
     print()
     return d_atoms.get_displacements()
-
-
-fname = filedialog.askopenfilename(
-    title='Please select...',
-    defaultextension='.lammpstrj',
-    filetypes=(
-        (
-            'LAMMPS Trajetory file',
-            '*.lammpstrj'
-        ),
-    ),
-    initialdir=os.curdir
-)
-
-try:
-    with open(fname) as file:
-        print(load_vectors(file))
-except Exception as e:
-    messagebox.showerror(
-        'Error occured',
-        'An error occured.',
-        detail=str(e)
-    )
-except BaseException as be:
-    messagebox.showinfo(
-        'Program successfully ended.',
-        'The program went successfully.',
-        detail=str(be)
-    )
