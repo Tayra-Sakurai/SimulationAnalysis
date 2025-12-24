@@ -1,4 +1,4 @@
-from typing import Any
+﻿from typing import Any
 from SimulationAnalysis import LAMMPS_Data, load_data
 import numpy as np
 from tkinter import messagebox, filedialog
@@ -37,8 +37,8 @@ def calc_basic_coords(data: Iterable[LAMMPS_Data], ncounts: int) -> npt.NDArray[
     xarray = np.log10(xarray)
     yarray: npt.NDArray[np.floating[Any]] = np.array(ylist)
     yarray = np.log10(yarray)
-    print(len(xarray))
     res = linregress(xarray, yarray)
+    print('n = ', ncounts, ': a = ', res.slope, '\u00b1 ', res.stderr, ', b = ', res.intercept, '\u00b1 ', res.intercept_stderr, sep='')
     a = res.slope, res.intercept
     return np.array(a)
 

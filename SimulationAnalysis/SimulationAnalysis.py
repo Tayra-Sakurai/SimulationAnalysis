@@ -1,4 +1,4 @@
-"""This calculates the end distance values from .lammpstrj file.
+﻿"""This calculates the end distance values from .lammpstrj file.
 
 The classes can be used for other purposes.
 """
