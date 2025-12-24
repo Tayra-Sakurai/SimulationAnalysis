@@ -8,8 +8,16 @@ import numpy.typing as npt
 from collections.abc import Iterable
 from scipy.stats import linregress
 
-type CoordinateType = tuple[npt.NDArray[np.floating[Any]],
-                            npt.NDArray[np.floating[Any]]]
+type CoordinateType = tuple[
+    tuple[
+        npt.NDArray[np.floating[Any]]
+    ],
+    tuple[
+        npt.NDArray[np.floating[Any]],
+        npt.NDArray[np.floating[Any]],
+        npt.NDArray[np.floating[Any]]
+    ]
+]
 
 
 def calc_basic_coords(data: Iterable[LAMMPS_Data], ncounts: int) -> npt.NDArray[np.floating[Any]]:
@@ -39,7 +47,7 @@ def calc_basic_coords(data: Iterable[LAMMPS_Data], ncounts: int) -> npt.NDArray[
     yarray = np.log10(yarray)
     res = linregress(xarray, yarray)
     print('n = ', ncounts, ': a = ', res.slope, '\u00b1 ', res.stderr, ', b = ', res.intercept, '\u00b1 ', res.intercept_stderr, sep='')
-    a = res.slope, res.intercept
+    a = res.slope, res.intercept, res.stderr, res.intercept_stderr
     return np.array(a)
 
 
@@ -56,10 +64,10 @@ def calc_data(data: Iterable[LAMMPS_Data]) -> CoordinateType:
     result : CoordinateType
         The coordinates.
     """
-    coeffs: list[float] = list()
+    coeffs: list[list[np.floating[Any] | float]] = list()
     cnts: list[int] = list()
     for i in  range(len(tuple(data)[0])):
-        coeffs.append(calc_basic_coords(data, i + 1)[0])
+        coeffs.append(calc_basic_coords(data, i + 1).tolist())
         cnts.append(i + 1)
     return np.array(cnts), np.array(coeffs)
 
